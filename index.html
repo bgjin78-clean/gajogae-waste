@@ -224,6 +224,7 @@
       </p>
 
       <form class="contact-form" id="contactForm">
+<input type="hidden" name="site_name" value="가족애 폐기물처리">
         <div class="form-row">
           <label for="name">성함</label>
           <input type="text" id="name" name="name" placeholder="성함을 입력해주세요" required>
@@ -414,7 +415,7 @@
     submitBtn.disabled = true;
     submitBtn.textContent = "접수 중입니다...";
 
-    emailjs.sendForm("gajogae_waste", "template_b4ox5js", this)
+    emailjs.sendForm("gajogae_waste", "template_wwbariw", params)
       .then(function() {
         alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
         document.getElementById("contactForm").reset();
