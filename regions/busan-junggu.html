@@ -366,7 +366,33 @@
       submitBtn.disabled = true;
       submitBtn.textContent = "접수 중입니다...";
 
-      emailjs.sendForm("gajogae_waste", "template_b4ox5js", this)
+      emailjs.send("gajogae_waste", "template_wwbariw", {
+                    title: "가족애 폐기물처리 상담접수",
+                    name: this.querySelector('[name="name"]')?.value || "",
+                    email: "bg.jin78@gmail.com",
+                    message:
+                        "접수 사이트: 가족애 폐기물처리
+
+" +
+                        "이름: " + (this.querySelector('[name="name"]')?.value || "") + "
+
+" +
+                        "연락처: " + (this.querySelector('[name="phone"]')?.value || "") + "
+
+" +
+                        "지역/주소: " + (this.querySelector('[name="region"]')?.value || "") + "
+
+" +
+                        "요청 서비스: " + (this.querySelector('[name="service"]')?.value || "") + "
+
+" +
+                        "상담 내용:
+" + (this.querySelector('[name="message"]')?.value || "") + "
+
+" +
+                        "접수 페이지:
+" + window.location.href
+                })
         .then(function() {
           alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
           document.getElementById("contactForm").reset();
