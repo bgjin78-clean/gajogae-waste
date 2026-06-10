@@ -5,7 +5,7 @@ BASE_URL = "https://www.gajogae-waste.com"
 PHONE = "010-5836-3895"
 
 EMAILJS_SERVICE_ID = "gajogae_waste"
-EMAILJS_TEMPLATE_ID = "template_b4ox5js"
+EMAILJS_TEMPLATE_ID = "template_wwbariw"
 EMAILJS_PUBLIC_KEY = "JKsVOKPtnWHIr2BCV"
 
 regions = [
