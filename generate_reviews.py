@@ -4,6 +4,10 @@ from datetime import datetime, timezone, timedelta
 BASE_URL = "https://www.gajogae-waste.com"
 PHONE = "010-5836-3895"
 
+EMAILJS_SERVICE_ID = "gajogae_waste"
+EMAILJS_TEMPLATE_ID = "template_b4ox5js"
+EMAILJS_PUBLIC_KEY = "JKsVOKPtnWHIr2BCV"
+
 CASE_IMAGE_COUNT = 100
 
 reviews = [
@@ -51,26 +55,55 @@ service_slug = {
 }
 
 service_desc = {
-    "가정폐기물처리": "집 안에 쌓인 생활폐기물, 오래된 가구, 고장 난 가전, 정리하기 어려운 짐을 중심으로 작업을 진행했습니다.",
-    "이사폐기물처리": "이사 전후로 남은 가구, 생활폐기물, 사용하지 않는 물건을 정리하고 반출하는 작업이었습니다.",
+    "가정폐기물처리": "집 안에 오래 보관된 생활용품, 낡은 가구, 고장 난 가전, 정리하기 어려운 짐을 중심으로 폐기물처리를 진행했습니다.",
+    "이사폐기물처리": "이사 전후로 남은 가구, 생활폐기물, 사용하지 않는 물건들을 분류하고 반출하는 작업이었습니다.",
     "폐업폐기물처리": "폐업 현장에 남은 집기류, 선반, 사무용품, 생활폐기물을 분류하고 반출하는 방식으로 진행했습니다.",
     "쓰레기집청소": "오랜 기간 방치된 생활쓰레기와 오염된 물품을 분류하고, 폐기물 반출과 공간 정리를 함께 진행했습니다.",
 }
 
-def get_case_images(index):
-    before_num = (index % CASE_IMAGE_COUNT) + 1
-    after_num = ((index + 17) % CASE_IMAGE_COUNT) + 1
-    return (
-        f"/images/cases/waste-before-{before_num:03d}.jpg",
-        f"/images/cases/waste-after-{after_num:03d}.jpg",
-    )
+before_problem = {
+    "가정폐기물처리": "작업 전에는 생활용품과 오래된 가구가 섞여 있어 혼자 정리하기 어려운 상태였습니다.",
+    "이사폐기물처리": "이사 후 남은 짐과 폐기물이 한 공간에 모여 있어 반출 동선 정리가 먼저 필요한 상황이었습니다.",
+    "폐업폐기물처리": "폐업 후 남은 집기류와 폐기물이 분리되지 않은 상태라 종류별 분류가 필요한 현장이었습니다.",
+    "쓰레기집청소": "생활쓰레기가 오래 방치되어 냄새와 오염이 함께 있었고, 폐기물 분류와 반출이 동시에 필요한 상황이었습니다.",
+}
+
+after_result = {
+    "가정폐기물처리": "사용하지 않는 생활폐기물을 반출한 뒤 공간이 넓어지고 정리가 쉬운 상태로 마무리되었습니다.",
+    "이사폐기물처리": "남은 폐기물을 정리한 뒤 이사 후 공간을 다시 사용할 수 있도록 정돈했습니다.",
+    "폐업폐기물처리": "집기류와 폐기물을 정리한 뒤 다음 정리나 철거 작업이 가능하도록 현장을 마무리했습니다.",
+    "쓰레기집청소": "방치된 쓰레기를 반출하고 남은 공간을 확인해 이후 청소와 정돈이 가능하도록 정리했습니다.",
+}
+
+def img_num(index, offset):
+    return ((index + offset) % CASE_IMAGE_COUNT) + 1
+
+def before_img(index):
+    return f"/images/cases/waste-before-{img_num(index, 0):03d}.jpg"
+
+def after_img(index):
+    return f"/images/cases/waste-after-{img_num(index, 17):03d}.jpg"
+
+def related_links(current_slug):
+    links = []
+    for region, slug, service in reviews:
+        if slug == current_slug:
+            continue
+        review_slug = f"{slug}-{service_slug[service]}"
+        links.append(f'<a href="/reviews/{review_slug}.html">{region} {service} 후기</a>')
+    return "\n".join(links[:12])
 
 def review_html(region, slug, service, index):
-    before_img, after_img = get_case_images(index)
     s_slug = service_slug[service]
     review_slug = f"{slug}-{s_slug}"
     url = f"{BASE_URL}/reviews/{review_slug}.html"
+    region_url = f"{BASE_URL}/regions/{slug}.html"
+
+    b_img = before_img(index)
+    a_img = after_img(index)
+
     title = f"{region} {service} 작업후기 | 가족애 폐기물처리"
+    desc = f"{region} {service} 작업후기입니다. 작업 전후 사진과 현장 상황, 폐기물처리 비용 기준, 상담 방법을 확인하실 수 있습니다."
 
     return f"""<!DOCTYPE html>
 <html lang="ko">
@@ -79,23 +112,70 @@ def review_html(region, slug, service, index):
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>{title}</title>
-  <meta name="description" content="{region} {service} 작업후기입니다. 가족애 폐기물처리는 가정폐기물, 이사폐기물, 폐업폐기물, 쓰레기집청소를 현장 상황에 맞춰 정리합니다." />
-  <meta name="keywords" content="{region} {service}, {region} 폐기물처리, {region} 작업후기, {region} 가정폐기물처리, {region} 쓰레기집청소" />
+  <meta name="description" content="{desc}" />
+  <meta name="keywords" content="{region} {service}, {region} 폐기물처리, {region} 작업후기, {region} 가정폐기물처리, {region} 쓰레기집청소, {region} 폐업폐기물처리" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="{title}" />
-  <meta property="og:description" content="{region} {service} 현장 작업후기와 폐기물처리 진행 안내입니다." />
+  <meta property="og:description" content="{desc}" />
   <meta property="og:url" content="{url}" />
   <meta property="og:image" content="{BASE_URL}/og-image.jpg" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="{title}" />
-  <meta name="twitter:description" content="{region} {service} 작업후기" />
+  <meta name="twitter:description" content="{desc}" />
   <meta name="twitter:image" content="{BASE_URL}/og-image.jpg" />
 
   <link rel="canonical" href="{url}" />
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="../style.css" />
+
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{title}",
+    "description": "{desc}",
+    "image": "{BASE_URL}/og-image.jpg",
+    "author": {{
+      "@type": "Organization",
+      "name": "가족애 폐기물처리"
+    }},
+    "publisher": {{
+      "@type": "Organization",
+      "name": "가족애 폐기물처리"
+    }},
+    "mainEntityOfPage": {{
+      "@type": "WebPage",
+      "@id": "{url}"
+    }}
+  }}
+  </script>
+
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {{
+        "@type": "Question",
+        "name": "{region} {service} 비용은 얼마부터인가요?",
+        "acceptedAnswer": {{
+          "@type": "Answer",
+          "text": "폐기물처리 비용은 1톤 트럭 1대 기준 25만원부터이며, 폐기물의 양, 층수, 엘리베이터 유무, 작업 공간의 넓이에 따라 달라질 수 있습니다."
+        }}
+      }},
+      {{
+        "@type": "Question",
+        "name": "{region} 지역도 사진 상담이 가능한가요?",
+        "acceptedAnswer": {{
+          "@type": "Answer",
+          "text": "네. 폐기물 사진, 지역, 층수, 엘리베이터 유무를 알려주시면 상담이 가능합니다."
+        }}
+      }}
+    ]
+  }}
+  </script>
 </head>
 
 <body>
@@ -108,90 +188,181 @@ def review_html(region, slug, service, index):
         <a href="/#process">진행과정</a>
         <a href="/#region">지역안내</a>
         <a href="/reviews/index.html">작업후기</a>
-        <a href="tel:{PHONE}">상담전화</a>
+        <a href="#contact">상담접수</a>
       </div>
     </nav>
   </header>
 
   <header class="hero region-hero">
     <div class="hero-inner">
-      <p class="badge">폐기물처리 작업후기</p>
+      <p class="badge">{region} 작업후기</p>
       <h1>{region} {service} 작업후기</h1>
       <p class="hero-text">
-        현장 상황에 맞춰 폐기물 분류, 반출, 정리까지 단계별로 진행한 사례입니다.
+        현장 상황 확인부터 폐기물 분류, 반출, 마무리까지<br />
+        실제 작업 흐름에 맞춰 정리한 폐기물처리 사례입니다.
       </p>
       <a href="tel:{PHONE}" class="main-btn">상담전화 {PHONE}</a>
     </div>
   </header>
 
   <main>
-    <section class="section intro">
-      <h2>{region} {service} 현장 정리 사례</h2>
-      <p>
-        이번 현장은 {region} 지역에서 문의가 들어온 {service} 작업입니다.
-        현장 사진과 주소를 확인한 뒤 폐기물의 양, 건물 구조, 반출 동선, 엘리베이터 유무를 기준으로 작업 범위를 안내드렸습니다.
-      </p>
-      <p>{service_desc[service]}</p>
-      <p>
-        폐기물처리 비용은 <strong>1톤 트럭 1대 기준 25만원부터</strong>이며,
-        실제 비용은 폐기물의 양, 층수, 엘리베이터 유무, 작업 공간의 넓이 등에 따라 달라질 수 있습니다.
-      </p>
+    <section class="section review-summary">
+      <h2>{region} {service} 현장 상황</h2>
+      <div class="review-summary-box">
+        <p>
+          이번 현장은 <strong>{region} {service}</strong> 문의로 접수된 작업입니다.
+          사진으로 현장 상태를 먼저 확인한 뒤 폐기물의 양, 건물 구조, 반출 동선,
+          층수와 엘리베이터 유무를 기준으로 작업 범위를 안내드렸습니다.
+        </p>
+        <p>
+          {service_desc[service]}
+        </p>
+      </div>
     </section>
 
-    <section class="section review-photo-section">
-      <h2>{region} {service} 현장 사진</h2>
-      <p class="form-desc">
-        작업 전 현장 상태와 정리 후 모습을 함께 확인할 수 있도록 구성했습니다.
-      </p>
+    <section class="section review-before-after">
+      <h2>{region} {service} 작업 전후 사진</h2>
 
-      <div class="review-photo-grid">
+      <div class="before-after-grid">
         <figure>
-          <img src="{before_img}" alt="{region} {service} 작업 전 폐기물 현장 사진" loading="lazy">
-          <figcaption>작업 전 현장 상태</figcaption>
+          <img src="{b_img}" alt="{region} {service} 작업 전 폐기물 현장 사진" loading="lazy">
+          <figcaption>작업 전</figcaption>
         </figure>
 
         <figure>
-          <img src="{after_img}" alt="{region} {service} 작업 후 정리 완료 사진" loading="lazy">
-          <figcaption>작업 후 정리 완료</figcaption>
+          <img src="{a_img}" alt="{region} {service} 작업 후 정리 완료 사진" loading="lazy">
+          <figcaption>작업 후</figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="section cards">
-      <h2>{region} {service} 작업 과정</h2>
+    <section class="section review-story">
+      <h2>{region} 현장 작업 내용</h2>
 
-      <div class="card-wrap">
-        <div class="card">
-          <h3>현장 확인</h3>
-          <p>사진과 주소를 통해 폐기물 양, 건물 형태, 반출 동선을 먼저 확인했습니다.</p>
+      <div class="story-grid">
+        <div class="story-card">
+          <span>01</span>
+          <h3>작업 전 상태</h3>
+          <p>{before_problem[service]}</p>
         </div>
 
-        <div class="card">
-          <h3>폐기물 분류</h3>
-          <p>생활폐기물, 가구류, 집기류 등 종류별로 분류해 반출이 가능하도록 정리했습니다.</p>
+        <div class="story-card">
+          <span>02</span>
+          <h3>분류와 반출</h3>
+          <p>
+            폐기물 종류를 먼저 구분하고, 큰 가구와 생활폐기물을 순서대로 정리했습니다.
+            반출 동선에 맞춰 작업 순서를 잡아 현장 부담을 줄였습니다.
+          </p>
         </div>
 
-        <div class="card">
-          <h3>운반 처리</h3>
-          <p>정리된 폐기물을 안전하게 반출하고 차량에 적재해 처리 절차를 진행했습니다.</p>
+        <div class="story-card">
+          <span>03</span>
+          <h3>작업 후 변화</h3>
+          <p>{after_result[service]}</p>
         </div>
+      </div>
+    </section>
 
-        <div class="card">
-          <h3>마무리 확인</h3>
-          <p>작업 후 남은 물품과 현장 상태를 확인하고 깔끔하게 마무리했습니다.</p>
-        </div>
+    <section class="section price">
+      <h2>{region} {service} 비용 안내</h2>
+      <div class="price-box">
+        <p class="price-main">1톤 트럭 1대 기준 <strong>25만원부터</strong></p>
+        <p>
+          같은 {service} 작업이라도 폐기물의 양, 건물 형태, 층수, 엘리베이터 유무,
+          작업 공간의 넓이와 차량 진입 가능 여부에 따라 비용은 달라질 수 있습니다.
+        </p>
+        <ul>
+          <li>폐기물의 양</li>
+          <li>건물의 형태와 층수</li>
+          <li>엘리베이터 유무</li>
+          <li>작업 공간의 넓이</li>
+          <li>차량 진입 가능 여부</li>
+          <li>폐기물 종류와 분류 난이도</li>
+        </ul>
       </div>
     </section>
 
     <section class="section area">
-      <h2>{region} 폐기물처리 관련 페이지</h2>
-      <p>아래 페이지에서 지역별 폐기물처리 안내를 함께 확인하실 수 있습니다.</p>
+      <h2>{region} 폐기물처리 관련 링크</h2>
+      <p>
+        현재 후기와 관련된 지역 페이지와 다른 작업후기를 함께 확인하실 수 있습니다.
+      </p>
 
       <div class="region-box">
         <a href="/regions/{slug}.html">{region} 폐기물처리 안내</a>
-        <a href="/">가족애 폐기물처리 메인</a>
         <a href="/reviews/index.html">작업후기 전체보기</a>
+        <a href="/">가족애 폐기물처리 메인</a>
       </div>
+
+      <h3 class="related-title">다른 지역 작업후기</h3>
+      <div class="region-box related-reviews">
+        {related_links(slug)}
+      </div>
+    </section>
+
+    <section class="section contact-form-section" id="contact">
+      <h2>{region} {service} 상담 접수</h2>
+      <p class="form-desc">
+        지역, 폐기물 종류, 현장 상황을 남겨주시면 확인 후 빠르게 연락드리겠습니다.
+      </p>
+
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <label for="name">성함</label>
+          <input type="text" id="name" name="name" placeholder="성함을 입력해주세요" required>
+        </div>
+
+        <div class="form-row">
+          <label for="phone">연락처</label>
+          <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required>
+        </div>
+
+        <div class="form-row">
+          <label for="region">지역</label>
+          <input type="text" id="region" name="region" value="{region}" required>
+        </div>
+
+        <div class="form-row">
+          <label for="service">필요 서비스</label>
+          <select id="service" name="service" required>
+            <option value="{service}" selected>{service}</option>
+            <option value="가정폐기물처리">가정폐기물처리</option>
+            <option value="이사폐기물처리">이사폐기물처리</option>
+            <option value="폐업폐기물처리">폐업폐기물처리</option>
+            <option value="쓰레기집청소">쓰레기집청소</option>
+            <option value="기타 폐기물처리">기타 폐기물처리</option>
+          </select>
+        </div>
+
+        <div class="form-row full">
+          <label for="message">현장 상황</label>
+          <textarea id="message" name="message" rows="5" placeholder="폐기물 양, 층수, 엘리베이터 유무, 사진 전달 가능 여부 등을 적어주세요."></textarea>
+        </div>
+
+        <div class="privacy-box">
+          <div class="privacy-title">개인정보 수집 및 이용 동의</div>
+          <div class="privacy-content">
+            <p>가족애 폐기물처리는 상담 접수 및 문의 응대를 위해 아래와 같이 개인정보를 수집·이용합니다.</p>
+            <ul>
+              <li>수집항목 : 성함, 연락처, 지역, 상담내용</li>
+              <li>이용목적 : 상담 문의 확인 및 연락</li>
+              <li>보유기간 : 상담 완료 후 최대 1년</li>
+              <li>동의를 거부할 권리가 있으며 거부 시 상담 접수가 제한될 수 있습니다.</li>
+            </ul>
+          </div>
+
+          <label class="privacy-check">
+            <input type="checkbox" required>
+            개인정보 수집 및 이용에 동의합니다.
+          </label>
+        </div>
+
+        <button type="submit" class="form-btn">상담 접수하기</button>
+
+        <p class="form-notice">
+          빠른 상담은 <strong>{PHONE}</strong>로 전화 또는 문자 주시면 됩니다.
+        </p>
+      </form>
     </section>
 
     <section class="section faq">
@@ -199,17 +370,26 @@ def review_html(region, slug, service, index):
 
       <div class="faq-item">
         <h3>{region} {service} 비용은 얼마부터인가요?</h3>
-        <p>1톤 트럭 1대 기준 25만원부터이며, 폐기물 양과 현장 상황에 따라 달라질 수 있습니다.</p>
+        <p>
+          폐기물처리 비용은 1톤 트럭 1대 기준 25만원부터입니다.
+          폐기물의 양과 현장 상황에 따라 실제 비용은 달라질 수 있습니다.
+        </p>
       </div>
 
       <div class="faq-item">
         <h3>사진만 보내도 상담이 가능한가요?</h3>
-        <p>가능합니다. 폐기물 사진, 지역, 층수, 엘리베이터 유무를 알려주시면 상담이 수월합니다.</p>
+        <p>
+          가능합니다. 폐기물 사진, 지역, 층수, 엘리베이터 유무를 알려주시면
+          작업 가능 여부와 대략적인 범위 안내가 가능합니다.
+        </p>
       </div>
 
       <div class="faq-item">
         <h3>{region} 지역도 빠른 상담이 가능한가요?</h3>
-        <p>네. {region} 및 인근 지역 폐기물처리 상담이 가능합니다.</p>
+        <p>
+          네. {region} 및 인근 지역 폐기물처리 상담이 가능합니다.
+          빠른 상담은 {PHONE}로 연락주시면 됩니다.
+        </p>
       </div>
     </section>
 
@@ -225,6 +405,31 @@ def review_html(region, slug, service, index):
     <p>{region} {service} · 폐기물처리 작업후기</p>
     <p><a href="/privacy.html">개인정보처리방침</a></p>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init("{EMAILJS_PUBLIC_KEY}");
+
+    document.getElementById("contactForm").addEventListener("submit", function(e) {{
+      e.preventDefault();
+
+      const submitBtn = this.querySelector(".form-btn");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "접수 중입니다...";
+
+      emailjs.sendForm("{EMAILJS_SERVICE_ID}", "{EMAILJS_TEMPLATE_ID}", this)
+        .then(function() {{
+          alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
+          document.getElementById("contactForm").reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = "상담 접수하기";
+        }}, function(error) {{
+          alert("접수 중 오류가 발생했습니다. 빠른 상담은 {PHONE}로 연락주세요.");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "상담 접수하기";
+        }});
+    }});
+  </script>
 </body>
 </html>
 """
@@ -380,11 +585,11 @@ def main():
     update_sitemap()
     update_rss()
 
-    print(f"완료: 작업후기 {len(reviews)}개 생성")
-    print("완료: reviews/index.html 생성")
-    print("완료: images/main, images/cases 폴더 확인")
-    print("완료: sitemap.xml 업데이트")
-    print("완료: rss.xml 업데이트")
+    print(f"완료: 업그레이드 작업후기 {len(reviews)}개 생성")
+    print("완료: 작업 전/후 사진 적용")
+    print("완료: 상담폼 적용")
+    print("완료: 내부링크 적용")
+    print("완료: sitemap.xml / rss.xml 업데이트")
 
 if __name__ == "__main__":
     main()
