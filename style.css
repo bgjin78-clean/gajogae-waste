@@ -811,3 +811,59 @@ footer {
   width: 20px;
   height: 20px;
 }
+.site-header {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #ead8c4;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.site-nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-logo {
+  font-size: 24px;
+  font-weight: 900;
+  color: #1f2f3d;
+}
+
+.site-menu {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.site-menu a {
+  font-weight: 800;
+  color: #111;
+  font-size: 16px;
+}
+
+.site-menu a:hover {
+  color: #8b5e34;
+}
+
+@media (max-width: 760px) {
+  .site-nav {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .site-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px 20px;
+  }
+
+  .site-logo {
+    font-size: 21px;
+  }
+}

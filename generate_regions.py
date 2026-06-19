@@ -242,6 +242,20 @@ def html_template(region):
 </head>
 
 <body>
+  <header class="site-header">
+    <nav class="site-nav">
+      <a href="/" class="site-logo">가족애 폐기물처리</a>
+
+      <div class="site-menu">
+        <a href="/#services">서비스</a>
+        <a href="/#process">진행과정</a>
+        <a href="/#region">지역안내</a>
+        <a href="/reviews/">작업후기</a>
+        <a href="#contact">상담접수</a>
+      </div>
+    </nav>
+  </header>
+
   <header class="hero region-hero">
     <div class="hero-inner">
       <p class="badge">{name} 폐기물처리 상담</p>
@@ -369,7 +383,7 @@ def html_template(region):
       </div>
     </section>
 
-    <section class="section contact-form-section">
+    <section class="section contact-form-section" id="contact">
       <h2>{name} 폐기물처리 상담 접수</h2>
       <p class="form-desc">
         지역, 폐기물 종류, 현장 상황을 남겨주시면 확인 후 빠르게 연락드리겠습니다.

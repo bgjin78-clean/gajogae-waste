@@ -81,6 +81,20 @@
 </head>
 
 <body>
+  <header class="site-header">
+    <nav class="site-nav">
+      <a href="/" class="site-logo">가족애 폐기물처리</a>
+
+      <div class="site-menu">
+        <a href="/#services">서비스</a>
+        <a href="/#process">진행과정</a>
+        <a href="/#region">지역안내</a>
+        <a href="/reviews/">작업후기</a>
+        <a href="#contact">상담접수</a>
+      </div>
+    </nav>
+  </header>
+
   <header class="hero region-hero">
     <div class="hero-inner">
       <p class="badge">부산 해운대구 폐기물처리 상담</p>
@@ -208,14 +222,13 @@
       </div>
     </section>
 
-    <section class="section contact-form-section">
+    <section class="section contact-form-section" id="contact">
       <h2>부산 해운대구 폐기물처리 상담 접수</h2>
       <p class="form-desc">
         지역, 폐기물 종류, 현장 상황을 남겨주시면 확인 후 빠르게 연락드리겠습니다.
       </p>
 
       <form class="contact-form" id="contactForm">
-<input type="hidden" name="site_name" value="가족애 폐기물처리">
         <div class="form-row">
           <label for="name">성함</label>
           <input type="text" id="name" name="name" placeholder="성함을 입력해주세요" required>
@@ -366,33 +379,7 @@
       submitBtn.disabled = true;
       submitBtn.textContent = "접수 중입니다...";
 
-      emailjs.send("gajogae_waste", "template_wwbariw", {
-                    title: "가족애 폐기물처리 상담접수",
-                    name: this.querySelector('[name="name"]')?.value || "",
-                    email: "bg.jin78@gmail.com",
-                    message:
-                        "접수 사이트: 가족애 폐기물처리
-
-" +
-                        "이름: " + (this.querySelector('[name="name"]')?.value || "") + "
-
-" +
-                        "연락처: " + (this.querySelector('[name="phone"]')?.value || "") + "
-
-" +
-                        "지역/주소: " + (this.querySelector('[name="region"]')?.value || "") + "
-
-" +
-                        "요청 서비스: " + (this.querySelector('[name="service"]')?.value || "") + "
-
-" +
-                        "상담 내용:
-" + (this.querySelector('[name="message"]')?.value || "") + "
-
-" +
-                        "접수 페이지:
-" + window.location.href
-                })
+      emailjs.sendForm("gajogae_waste", "template_wwbariw", this)
         .then(function() {
           alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
           document.getElementById("contactForm").reset();
