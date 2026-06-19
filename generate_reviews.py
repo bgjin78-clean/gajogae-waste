@@ -4,6 +4,8 @@ from datetime import datetime, timezone, timedelta
 BASE_URL = "https://www.gajogae-waste.com"
 PHONE = "010-5836-3895"
 
+CASE_IMAGE_COUNT = 100
+
 reviews = [
     ("창원", "changwon", "쓰레기집청소"),
     ("김해", "gimhae", "가정폐기물처리"),
@@ -41,17 +43,33 @@ reviews = [
     ("울산 울주군", "ulsan-ulju", "폐업폐기물처리"),
 ]
 
-service_text = {
-    "가정폐기물처리": "집 안에 오래 보관된 생활용품, 고장 난 가전, 낡은 가구와 정리하기 어려운 짐을 중심으로 폐기물처리를 진행했습니다.",
-    "이사폐기물처리": "이사 전후로 남은 가구, 생활폐기물, 사용하지 않는 물건들을 정리하고 반출하는 작업을 진행했습니다.",
+service_slug = {
+    "가정폐기물처리": "home-waste",
+    "이사폐기물처리": "moving-waste",
+    "폐업폐기물처리": "business-waste",
+    "쓰레기집청소": "trash-cleaning",
+}
+
+service_desc = {
+    "가정폐기물처리": "집 안에 쌓인 생활폐기물, 오래된 가구, 고장 난 가전, 정리하기 어려운 짐을 중심으로 작업을 진행했습니다.",
+    "이사폐기물처리": "이사 전후로 남은 가구, 생활폐기물, 사용하지 않는 물건을 정리하고 반출하는 작업이었습니다.",
     "폐업폐기물처리": "폐업 현장에 남은 집기류, 선반, 사무용품, 생활폐기물을 분류하고 반출하는 방식으로 진행했습니다.",
     "쓰레기집청소": "오랜 기간 방치된 생활쓰레기와 오염된 물품을 분류하고, 폐기물 반출과 공간 정리를 함께 진행했습니다.",
 }
 
-def review_html(region, slug, service):
-    review_slug = f"{slug}-{service_map(service)}"
+def get_case_images(index):
+    before_num = (index % CASE_IMAGE_COUNT) + 1
+    after_num = ((index + 17) % CASE_IMAGE_COUNT) + 1
+    return (
+        f"/images/cases/waste-before-{before_num:03d}.jpg",
+        f"/images/cases/waste-after-{after_num:03d}.jpg",
+    )
+
+def review_html(region, slug, service, index):
+    before_img, after_img = get_case_images(index)
+    s_slug = service_slug[service]
+    review_slug = f"{slug}-{s_slug}"
     url = f"{BASE_URL}/reviews/{review_slug}.html"
-    region_url = f"{BASE_URL}/regions/{slug}.html"
     title = f"{region} {service} 작업후기 | 가족애 폐기물처리"
 
     return f"""<!DOCTYPE html>
@@ -84,20 +102,20 @@ def review_html(region, slug, service):
   <header class="site-header">
     <nav class="site-nav">
       <a href="/" class="site-logo">가족애 폐기물처리</a>
-
       <div class="site-menu">
+        <a href="/">메인</a>
         <a href="/#services">서비스</a>
         <a href="/#process">진행과정</a>
         <a href="/#region">지역안내</a>
-        <a href="/reviews/">작업후기</a>
-        <a href="tel:010-5836-3895">상담전화</a>
+        <a href="/reviews/index.html">작업후기</a>
+        <a href="tel:{PHONE}">상담전화</a>
       </div>
     </nav>
   </header>
-  
+
   <header class="hero region-hero">
     <div class="hero-inner">
-      <p class="badge">작업후기</p>
+      <p class="badge">폐기물처리 작업후기</p>
       <h1>{region} {service} 작업후기</h1>
       <p class="hero-text">
         현장 상황에 맞춰 폐기물 분류, 반출, 정리까지 단계별로 진행한 사례입니다.
@@ -111,17 +129,32 @@ def review_html(region, slug, service):
       <h2>{region} {service} 현장 정리 사례</h2>
       <p>
         이번 현장은 {region} 지역에서 문의가 들어온 {service} 작업입니다.
-        현장 확인 후 폐기물의 양, 건물 구조, 반출 동선, 엘리베이터 유무를 확인하고 작업 범위를 안내드렸습니다.
+        현장 사진과 주소를 확인한 뒤 폐기물의 양, 건물 구조, 반출 동선, 엘리베이터 유무를 기준으로 작업 범위를 안내드렸습니다.
       </p>
-
-      <p>
-        {service_text[service]}
-      </p>
-
+      <p>{service_desc[service]}</p>
       <p>
         폐기물처리 비용은 <strong>1톤 트럭 1대 기준 25만원부터</strong>이며,
         실제 비용은 폐기물의 양, 층수, 엘리베이터 유무, 작업 공간의 넓이 등에 따라 달라질 수 있습니다.
       </p>
+    </section>
+
+    <section class="section review-photo-section">
+      <h2>{region} {service} 현장 사진</h2>
+      <p class="form-desc">
+        작업 전 현장 상태와 정리 후 모습을 함께 확인할 수 있도록 구성했습니다.
+      </p>
+
+      <div class="review-photo-grid">
+        <figure>
+          <img src="{before_img}" alt="{region} {service} 작업 전 폐기물 현장 사진" loading="lazy">
+          <figcaption>작업 전 현장 상태</figcaption>
+        </figure>
+
+        <figure>
+          <img src="{after_img}" alt="{region} {service} 작업 후 정리 완료 사진" loading="lazy">
+          <figcaption>작업 후 정리 완료</figcaption>
+        </figure>
+      </div>
     </section>
 
     <section class="section cards">
@@ -150,21 +183,6 @@ def review_html(region, slug, service):
       </div>
     </section>
 
-    <section class="section price">
-      <h2>{region} 폐기물처리 비용에 영향을 주는 요소</h2>
-      <div class="price-box">
-        <p class="price-main">1톤 트럭 1대 기준 <strong>25만원부터</strong></p>
-        <ul>
-          <li>폐기물의 양</li>
-          <li>건물의 형태와 층수</li>
-          <li>엘리베이터 유무</li>
-          <li>작업 공간의 넓이</li>
-          <li>차량 진입 가능 여부</li>
-          <li>폐기물 종류와 분류 난이도</li>
-        </ul>
-      </div>
-    </section>
-
     <section class="section area">
       <h2>{region} 폐기물처리 관련 페이지</h2>
       <p>아래 페이지에서 지역별 폐기물처리 안내를 함께 확인하실 수 있습니다.</p>
@@ -172,7 +190,7 @@ def review_html(region, slug, service):
       <div class="region-box">
         <a href="/regions/{slug}.html">{region} 폐기물처리 안내</a>
         <a href="/">가족애 폐기물처리 메인</a>
-        <a href="/reviews/index.html">폐기물처리 작업후기 전체보기</a>
+        <a href="/reviews/index.html">작업후기 전체보기</a>
       </div>
     </section>
 
@@ -211,18 +229,10 @@ def review_html(region, slug, service):
 </html>
 """
 
-def service_map(service):
-    return {
-        "가정폐기물처리": "home-waste",
-        "이사폐기물처리": "moving-waste",
-        "폐업폐기물처리": "business-waste",
-        "쓰레기집청소": "trash-cleaning",
-    }[service]
-
 def create_reviews_index():
     items = ""
     for region, slug, service in reviews:
-        review_slug = f"{slug}-{service_map(service)}"
+        review_slug = f"{slug}-{service_slug[service]}"
         items += f'<a href="/reviews/{review_slug}.html">{region} {service} 작업후기</a>\n'
 
     html = f"""<!DOCTYPE html>
@@ -233,12 +243,33 @@ def create_reviews_index():
 
   <title>폐기물처리 작업후기 | 가족애 폐기물처리</title>
   <meta name="description" content="부산·경남·울산 폐기물처리 작업후기 모음입니다. 가정폐기물처리, 이사폐기물처리, 폐업폐기물처리, 쓰레기집청소 사례를 확인하세요." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="폐기물처리 작업후기 | 가족애 폐기물처리" />
+  <meta property="og:description" content="부산·경남·울산 지역별 폐기물처리 작업후기 모음입니다." />
+  <meta property="og:url" content="{BASE_URL}/reviews/index.html" />
+  <meta property="og:image" content="{BASE_URL}/og-image.jpg" />
+
   <link rel="canonical" href="{BASE_URL}/reviews/index.html" />
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="../style.css" />
 </head>
 
 <body>
+  <header class="site-header">
+    <nav class="site-nav">
+      <a href="/" class="site-logo">가족애 폐기물처리</a>
+      <div class="site-menu">
+        <a href="/">메인</a>
+        <a href="/#services">서비스</a>
+        <a href="/#process">진행과정</a>
+        <a href="/#region">지역안내</a>
+        <a href="/reviews/index.html">작업후기</a>
+        <a href="tel:{PHONE}">상담전화</a>
+      </div>
+    </nav>
+  </header>
+
   <header class="hero region-hero">
     <div class="hero-inner">
       <p class="badge">작업후기 모음</p>
@@ -269,11 +300,7 @@ def create_reviews_index():
         f.write(html)
 
 def update_sitemap():
-    urls = [f"{BASE_URL}/"]
-    urls.append(f"{BASE_URL}/reviews/index.html")
-
-    for region, slug, service in reviews:
-        urls.append(f"{BASE_URL}/reviews/{slug}-{service_map(service)}.html")
+    urls = []
 
     if os.path.exists("sitemap.xml"):
         with open("sitemap.xml", "r", encoding="utf-8") as f:
@@ -283,6 +310,14 @@ def update_sitemap():
                 url = line.replace("<loc>", "").replace("</loc>", "").strip()
                 if url not in urls:
                     urls.append(url)
+
+    if f"{BASE_URL}/reviews/index.html" not in urls:
+        urls.append(f"{BASE_URL}/reviews/index.html")
+
+    for region, slug, service in reviews:
+        review_url = f"{BASE_URL}/reviews/{slug}-{service_slug[service]}.html"
+        if review_url not in urls:
+            urls.append(review_url)
 
     sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
     sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -306,7 +341,7 @@ def update_rss():
 
     items = ""
     for region, slug, service in reviews[:20]:
-        review_slug = f"{slug}-{service_map(service)}"
+        review_slug = f"{slug}-{service_slug[service]}"
         items += f"""
     <item>
       <title>{region} {service} 작업후기</title>
@@ -332,12 +367,14 @@ def update_rss():
 
 def main():
     os.makedirs("reviews", exist_ok=True)
+    os.makedirs("images/main", exist_ok=True)
+    os.makedirs("images/cases", exist_ok=True)
 
-    for region, slug, service in reviews:
-        review_slug = f"{slug}-{service_map(service)}"
+    for index, (region, slug, service) in enumerate(reviews):
+        review_slug = f"{slug}-{service_slug[service]}"
         path = f"reviews/{review_slug}.html"
         with open(path, "w", encoding="utf-8") as f:
-            f.write(review_html(region, slug, service))
+            f.write(review_html(region, slug, service, index))
 
     create_reviews_index()
     update_sitemap()
@@ -345,6 +382,7 @@ def main():
 
     print(f"완료: 작업후기 {len(reviews)}개 생성")
     print("완료: reviews/index.html 생성")
+    print("완료: images/main, images/cases 폴더 확인")
     print("완료: sitemap.xml 업데이트")
     print("완료: rss.xml 업데이트")
 

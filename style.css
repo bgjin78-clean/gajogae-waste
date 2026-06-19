@@ -867,3 +867,44 @@ footer {
     font-size: 21px;
   }
 }
+.review-photo-section {
+  max-width: 1100px;
+}
+
+.review-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+.review-photo-grid figure {
+  background: #fff;
+  border: 1px solid #ead8c4;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(61, 42, 28, 0.08);
+}
+
+.review-photo-grid img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display: block;
+}
+
+.review-photo-grid figcaption {
+  padding: 16px;
+  text-align: center;
+  font-weight: 800;
+  color: #5c3c20;
+}
+
+@media (max-width: 760px) {
+  .review-photo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-photo-grid img {
+    height: 280px;
+  }
+}
