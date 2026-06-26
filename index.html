@@ -267,6 +267,8 @@
         </div>
 
         <form class="contact-form" id="contactForm">
+          <input type="hidden" name="title" id="mailTitle">
+          <input type="hidden" name="메시지" id="mailMessage">
           <div class="form-row">
             <label for="name">성함</label>
             <input type="text" id="name" name="name" placeholder="성함을 입력해주세요" required>
@@ -432,21 +434,42 @@
     <p><a href="/privacy.html">개인정보처리방침</a></p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>
-    emailjs.init("JKsVOKPtnWHIr2BCV");
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init("JKsVOKPtnWHIr2BCV");
 
-    document.getElementById("contactForm").addEventListener("submit", function(e) {
+  const contactForm = document.getElementById("contactForm");
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", function(e) {
       e.preventDefault();
 
       const submitBtn = this.querySelector(".form-btn");
       submitBtn.disabled = true;
       submitBtn.textContent = "접수 중입니다...";
 
-      emailjs.send("gajogae_waste", "template_b4ox5js", this)
+      const formData = new FormData(this);
+
+      const name = formData.get("name") || "";
+      const phone = formData.get("phone") || "";
+      const region = formData.get("region") || "";
+      const service = formData.get("service") || "";
+      const message = formData.get("message") || "";
+
+      document.getElementById("mailTitle").value =
+        `[가족애 폐기물처리] ${region} ${service} 상담접수`;
+
+      document.getElementById("mailMessage").value =
+        `성함: ${name}\n` +
+        `연락처: ${phone}\n` +
+        `지역: ${region}\n` +
+        `필요 서비스: ${service}\n\n` +
+        `현장 상황:\n${message}`;
+
+      emailjs.sendForm("gajogae_waste", "template_wwbariw", this)
         .then(function() {
           alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
-          document.getElementById("contactForm").reset();
+          contactForm.reset();
           submitBtn.disabled = false;
           submitBtn.textContent = "상담 접수하기";
         }, function(error) {
@@ -455,6 +478,7 @@
           submitBtn.textContent = "상담 접수하기";
         });
     });
-  </script>
+  }
+</script>
 </body>
 </html>

@@ -157,7 +157,7 @@
           <figcaption>폐기물 분류 작업</figcaption>
         </figure>
         <figure>
-          <img src="/images/main/after-26.jpg" alt="창원 폐기물처리 작업 후 사진" loading="lazy">
+          <img src="/images/main/after-24.jpg" alt="창원 폐기물처리 작업 후 사진" loading="lazy">
           <figcaption>작업 후 정리 완료</figcaption>
         </figure>
         <figure>
@@ -427,7 +427,7 @@
       submitBtn.disabled = true;
       submitBtn.textContent = "접수 중입니다...";
 
-      emailjs.sendForm("gajogae_waste", "template_wwbariw", this)
+      emailjs.send("gajogae_waste", "template_wwbariw", this)
         .then(function() {
           alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
           document.getElementById("contactForm").reset();
