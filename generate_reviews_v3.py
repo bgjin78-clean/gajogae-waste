@@ -343,7 +343,9 @@ def review_html(region, slug, service, index):
         </div>
 
         <form class="contact-form" id="contactForm">
-          <div class="form-row">
+          <input type="hidden" name="title" id="mailTitle">
+          <input type="hidden" name="raw_message" id="mailMessage">
+          <input type="hidden" name="메시지" id="mailMessageKr"><div class="form-row">
             <label for="name">성함</label>
             <input type="text" id="name" name="name" placeholder="성함을 입력해주세요" required>
           </div>
@@ -368,7 +370,7 @@ def review_html(region, slug, service, index):
           </div>
           <div class="form-row full">
             <label for="message">현장 상황</label>
-            <textarea id="message" name="message" rows="5" placeholder="폐기물 양, 층수, 엘리베이터 유무, 사진 전달 가능 여부 등을 적어주세요."></textarea>
+            <textarea id="message" name="raw_message" rows="5" placeholder="폐기물 양, 층수, 엘리베이터 유무, 사진 전달 가능 여부 등을 적어주세요."></textarea>
           </div>
 
           <div class="privacy-box">
@@ -425,23 +427,61 @@ def review_html(region, slug, service, index):
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     emailjs.init("{EMAILJS_PUBLIC_KEY}");
-    document.getElementById("contactForm").addEventListener("submit", function(e) {{
-      e.preventDefault();
-      const submitBtn = this.querySelector(".form-btn");
-      submitBtn.disabled = true;
-      submitBtn.textContent = "접수 중입니다...";
-      emailjs.send("{EMAILJS_SERVICE_ID}", "{EMAILJS_TEMPLATE_ID}", this)
-        .then(function() {{
-          alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
-          document.getElementById("contactForm").reset();
-          submitBtn.disabled = false;
-          submitBtn.textContent = "상담 접수하기";
-        }}, function(error) {{
-          alert("접수 중 오류가 발생했습니다. 빠른 상담은 {PHONE}로 연락주세요.");
-          submitBtn.disabled = false;
-          submitBtn.textContent = "상담 접수하기";
-        }});
-    }});
+
+    const contactForm = document.getElementById("contactForm");
+
+    if (contactForm) {{
+      contactForm.addEventListener("submit", function(e) {{
+        e.preventDefault();
+
+        const submitBtn = this.querySelector(".form-btn");
+        submitBtn.disabled = true;
+        submitBtn.textContent = "접수 중입니다...";
+
+        const formData = new FormData(this);
+
+        const name = formData.get("name") || "";
+        const phone = formData.get("phone") || "";
+        const region = formData.get("region") || "";
+        const service = formData.get("service") || "";
+        const message = formData.get("raw_message") || "";
+
+        const finalTitle = `[가족애 폐기물처리] ${{region}} ${{service}} 상담접수`;
+
+        const finalMessage =
+          `성함: ${{name}}
+` +
+          `연락처: ${{phone}}
+` +
+          `지역: ${{region}}
+` +
+          `필요 서비스: ${{service}}
+
+` +
+          `현장 상황
+` +
+          `--------------------------------
+` +
+          `${{message}}`;
+
+        document.getElementById("mailTitle").value = finalTitle;
+        document.getElementById("mailMessage").value = finalMessage;
+        document.getElementById("mailMessageKr").value = finalMessage;
+
+        emailjs.sendForm("{EMAILJS_SERVICE_ID}", "{EMAILJS_TEMPLATE_ID}", this)
+          .then(function() {{
+            alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
+            contactForm.reset();
+            submitBtn.disabled = false;
+            submitBtn.textContent = "상담 접수하기";
+          }}, function(error) {{
+            console.log("EmailJS Error:", error);
+            alert("접수 중 오류가 발생했습니다. 빠른 상담은 {PHONE}로 연락주세요.");
+            submitBtn.disabled = false;
+            submitBtn.textContent = "상담 접수하기";
+          }});
+      }});
+    }}
   </script>
 </body>
 </html>
