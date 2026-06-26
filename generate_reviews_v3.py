@@ -430,7 +430,7 @@ def review_html(region, slug, service, index):
       const submitBtn = this.querySelector(".form-btn");
       submitBtn.disabled = true;
       submitBtn.textContent = "접수 중입니다...";
-      emailjs.sendForm("{EMAILJS_SERVICE_ID}", "{EMAILJS_TEMPLATE_ID}", this)
+      emailjs.send("{EMAILJS_SERVICE_ID}", "{EMAILJS_TEMPLATE_ID}", this)
         .then(function() {{
           alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
           document.getElementById("contactForm").reset();

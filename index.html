@@ -443,7 +443,7 @@
       submitBtn.disabled = true;
       submitBtn.textContent = "접수 중입니다...";
 
-      emailjs.sendForm("gajogae_waste", "template_b4ox5js", this)
+      emailjs.send("gajogae_waste", "template_b4ox5js", this)
         .then(function() {
           alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
           document.getElementById("contactForm").reset();
