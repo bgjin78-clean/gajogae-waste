@@ -206,9 +206,7 @@
           </ul>
         </div>
 
-        <form class="contact-form" id="contactForm">
-          <input type="hidden" name="title" id="mailTitle">
-          <input type="hidden" name="raw_message" id="mailMessage">
+        <form class="contact-form" id="contactForm"><input type="hidden" name="raw_message" id="mailMessage">
           <input type="hidden" name="메시지" id="mailMessageKr"><div class="form-row">
             <label for="name">성함</label>
             <input type="text" id="name" name="name" placeholder="성함을 입력해주세요" required>
@@ -288,64 +286,81 @@
     <p><a href="/privacy.html">개인정보처리방침</a></p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>
-    emailjs.init("JKsVOKPtnWHIr2BCV");
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-    const contactForm = document.getElementById("contactForm");
+<script>
+(function () {
+  emailjs.init("JKsVOKPtnWHIr2BCV");
 
-    if (contactForm) {
-      contactForm.addEventListener("submit", function(e) {
-        e.preventDefault();
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contactForm");
+    if (!form) return;
 
-        const submitBtn = this.querySelector(".form-btn");
-        submitBtn.disabled = true;
-        submitBtn.textContent = "접수 중입니다...";
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-        const formData = new FormData(this);
+      const btn = form.querySelector(".form-btn");
+      const originalText = btn.textContent;
 
-        const name = formData.get("name") || "";
-        const phone = formData.get("phone") || "";
-        const region = formData.get("region") || "";
-        const service = formData.get("service") || "";
-        const message = formData.get("raw_message") || "";
+      btn.disabled = true;
+      btn.textContent = "접수 중입니다...";
 
-        const finalTitle = `[가족애 폐기물처리] ${region} ${service} 상담접수`;
+      const name = form.querySelector('[name="name"]')?.value || "";
+      const phone = form.querySelector('[name="phone"]')?.value || "";
+      const region = form.querySelector('[name="region"]')?.value || "";
+      const service = form.querySelector('[name="service"]')?.value || "";
 
-        const finalMessage =
-          `성함: ${name}
-` +
-          `연락처: ${phone}
-` +
-          `지역: ${region}
-` +
-          `필요 서비스: ${service}
+      const content =
+        form.querySelector("textarea")?.value ||
+        form.querySelector('[name="message"]')?.value ||
+        form.querySelector('[name="raw_message"]')?.value ||
+        form.querySelector('[name="내용"]')?.value ||
+        form.querySelector('[name="문의내용"]')?.value ||
+        "";
 
-` +
-          `현장 상황
-` +
-          `--------------------------------
-` +
-          `${message}`;
+      const messageText = [
+        "접수 사이트: 가족애 폐기물처리",
+        "",
+        "이름: " + name,
+        "",
+        "연락처: " + phone,
+        "",
+        "지역: " + region,
+        "",
+        "요청 서비스: " + service,
+        "",
+        "상담 내용:",
+        content,
+        "",
+        "접수 페이지:",
+        window.location.href
+      ].join("\n");
 
-        document.getElementById("mailTitle").value = finalTitle;
-        document.getElementById("mailMessage").value = finalMessage;
-        document.getElementById("mailMessageKr").value = finalMessage;
+      const params = {
+        title: "[가족애 폐기물처리] " + region + " " + service + " 상담접수",
+        site_name: "가족애 폐기물처리",
+        name: name,
+        email: "bg.jin78@gmail.com",
+        message: messageText
+      };
 
-        emailjs.sendForm("gajogae_waste", "template_wwbariw", this)
-          .then(function() {
-            alert("상담 접수가 완료되었습니다. 빠르게 연락드리겠습니다.");
-            contactForm.reset();
-            submitBtn.disabled = false;
-            submitBtn.textContent = "상담 접수하기";
-          }, function(error) {
-            console.log("EmailJS Error:", error);
-            alert("접수 중 오류가 발생했습니다. 빠른 상담은 010-5836-3895로 연락주세요.");
-            submitBtn.disabled = false;
-            submitBtn.textContent = "상담 접수하기";
-          });
-      });
-    }
-  </script>
+      emailjs.send("gajogae_waste", "template_wwbariw", params)
+        .then(function () {
+          alert("상담 접수가 완료되었습니다.");
+          form.reset();
+        })
+        .catch(function (error) {
+          console.error(error);
+          alert("전송 중 오류가 발생했습니다.");
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = originalText;
+        });
+    });
+  });
+})();
+</script>
+</script>
 </body>
 </html>
