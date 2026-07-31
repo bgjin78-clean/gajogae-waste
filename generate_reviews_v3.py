@@ -1,4 +1,5 @@
 import os
+import random
 from datetime import datetime, timezone, timedelta
 
 BASE_URL = "https://www.gajogae-waste.com"
@@ -9,6 +10,9 @@ EMAILJS_TEMPLATE_ID = "template_wwbariw"
 EMAILJS_PUBLIC_KEY = "JKsVOKPtnWHIr2BCV"
 
 CASE_IMAGE_COUNT = 100
+PROCESS_IMAGE_COUNT = 25
+# process-01만 jpeg 확장자
+PROCESS_EXT = {1: ".jpeg"}
 
 reviews = [
     ("창원", "changwon", "쓰레기집청소"),
@@ -45,6 +49,13 @@ reviews = [
     ("울산 북구", "ulsan-bukgu", "쓰레기집청소"),
     ("울산 동구", "ulsan-donggu", "가정폐기물처리"),
     ("울산 울주군", "ulsan-ulju", "폐업폐기물처리"),
+
+    # 미작성 키워드 추가 (창원·김해·양산·함안·창녕)
+    ("창원", "changwon", "가정폐기물처리"),
+    ("김해", "gimhae", "이사폐기물처리"),
+    ("양산", "yangsan", "쓰레기집청소"),
+    ("함안", "haman", "폐업폐기물처리"),
+    ("창녕", "changnyeong", "이사폐기물처리"),
 ]
 
 service_slug = {
@@ -78,31 +89,49 @@ after_result = {
 }
 
 
-def img_num(index, offset):
-    return ((index + offset) % CASE_IMAGE_COUNT) + 1
+def process_path(n):
+    ext = PROCESS_EXT.get(n, ".jpg")
+    return f"/images/main/process-{n:02d}{ext}"
 
 
-def case_before(index, offset=0):
-    return f"/images/cases/waste-before-{img_num(index, offset):03d}.jpg"
-
-
-def case_after(index, offset=0):
-    return f"/images/cases/waste-after-{img_num(index, offset):03d}.jpg"
+def image_set(seed_text, pair_count=2, process_count=2):
+    """전·후는 같은 번호(같은 현장)끼리 짝을 맞추고, 중은 process 이미지를 사용."""
+    random.seed(seed_text)
+    pairs = random.sample(range(1, CASE_IMAGE_COUNT + 1), pair_count)
+    process = random.sample(range(1, PROCESS_IMAGE_COUNT + 1), process_count)
+    return {
+        "pairs": pairs,
+        "before": [f"/images/cases/waste-before-{n:03d}.jpg" for n in pairs],
+        "after": [f"/images/cases/waste-after-{n:03d}.jpg" for n in pairs],
+        "process": [process_path(n) for n in process],
+    }
 
 
 def review_slug(slug, service):
     return f"{slug}-{service_slug[service]}"
 
 
-def related_reviews(current_slug):
+def related_reviews(current_slug, current_service):
+    current_rslug = review_slug(current_slug, current_service)
     items = []
+
+    # 같은 지역 다른 서비스 후기를 우선 노출 (내부링크 SEO)
     for region, slug, service in reviews:
-        if slug == current_slug:
+        rslug = review_slug(slug, service)
+        if rslug == current_rslug:
             continue
-        items.append(f'<a href="/reviews/{review_slug(slug, service)}.html">{region} {service} 후기</a>')
+        if slug == current_slug:
+            items.append(f'<a href="/reviews/{rslug}.html">{region} {service} 후기</a>')
+
+    for region, slug, service in reviews:
+        rslug = review_slug(slug, service)
+        if rslug == current_rslug or slug == current_slug:
+            continue
+        items.append(f'<a href="/reviews/{rslug}.html">{region} {service} 후기</a>')
         if len(items) >= 12:
             break
-    return "\n".join(items)
+
+    return "\n".join(items[:12])
 
 
 def type_content(region, service, type_index):
@@ -143,12 +172,11 @@ def review_html(region, slug, service, index):
     title = f"{region} {service} 작업후기 | 가족애 폐기물처리"
     desc = f"{region} {service} {type_name}입니다. 작업 전후 사진, 현장 상황, 폐기물처리 비용 기준, 상담 방법을 확인하실 수 있습니다."
 
-    before1 = case_before(index, 0)
-    before2 = case_before(index, 23)
-    middle1 = case_before(index, 47)
-    middle2 = case_after(index, 9)
-    after1 = case_after(index, 17)
-    after2 = case_after(index, 41)
+    # 가족애유품과 동일: 전·후 같은 번호 세트 + process(작업중)
+    imgs = image_set(f"{slug}-{service}")
+    before1, before2 = imgs["before"][0], imgs["before"][1]
+    after1, after2 = imgs["after"][0], imgs["after"][1]
+    middle1, middle2 = imgs["process"][0], imgs["process"][1]
 
     return f"""<!DOCTYPE html>
 <html lang="ko">
@@ -159,7 +187,7 @@ def review_html(region, slug, service, index):
 
   <title>{title}</title>
   <meta name="description" content="{desc}" />
-  <meta name="keywords" content="{region} {service}, {region} 폐기물처리, {region} 작업후기, {region} 가정폐기물처리, {region} 쓰레기집청소, {region} 폐업폐기물처리" />
+  <meta name="keywords" content="{region} {service}, {region} 폐기물처리, {region} 작업후기, {region} 가정폐기물처리, {region} 이사폐기물처리, {region} 폐업폐기물처리, {region} 쓰레기집청소" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="{title}" />
@@ -254,24 +282,24 @@ def review_html(region, slug, service, index):
           <figcaption>작업 전 현장 상태</figcaption>
         </figure>
         <figure>
-          <img src="{before2}" alt="{region} {service} 작업 전 폐기물 현장 사진 2" loading="lazy">
-          <figcaption>분류 전 폐기물 상태</figcaption>
-        </figure>
-        <figure>
-          <img src="{middle1}" alt="{region} {service} 폐기물 분류 과정 사진 1" loading="lazy">
-          <figcaption>폐기물 분류 과정</figcaption>
-        </figure>
-        <figure>
-          <img src="{middle2}" alt="{region} {service} 폐기물 반출 과정 사진 2" loading="lazy">
-          <figcaption>반출 및 정리 과정</figcaption>
-        </figure>
-        <figure>
           <img src="{after1}" alt="{region} {service} 작업 후 정리 완료 사진 1" loading="lazy">
           <figcaption>작업 후 정리 완료</figcaption>
         </figure>
         <figure>
+          <img src="{before2}" alt="{region} {service} 작업 전 폐기물 현장 사진 2" loading="lazy">
+          <figcaption>다른 현장 작업 전</figcaption>
+        </figure>
+        <figure>
           <img src="{after2}" alt="{region} {service} 작업 후 정리 완료 사진 2" loading="lazy">
-          <figcaption>마무리 확인</figcaption>
+          <figcaption>다른 현장 작업 후</figcaption>
+        </figure>
+        <figure>
+          <img src="{middle1}" alt="{region} {service} 폐기물 분류 과정 사진" loading="lazy">
+          <figcaption>폐기물 분류 과정</figcaption>
+        </figure>
+        <figure>
+          <img src="{middle2}" alt="{region} {service} 폐기물 반출 과정 사진" loading="lazy">
+          <figcaption>반출 및 정리 과정</figcaption>
         </figure>
       </div>
     </section>
@@ -324,7 +352,7 @@ def review_html(region, slug, service, index):
         <a href="/regions/{slug}.html">{region} 폐기물처리 안내</a>
         <a href="/reviews/index.html">작업후기 전체보기</a>
         <a href="/">가족애 폐기물처리 메인</a>
-        {related_reviews(slug)}
+        {related_reviews(slug, service)}
       </div>
     </section>
 
@@ -411,7 +439,7 @@ def review_html(region, slug, service, index):
 
     <section class="cta">
       <h2>{region} 폐기물처리 상담이 필요하신가요?</h2>
-      <p>{service}, 가정폐기물처리, 폐업폐기물처리, 쓰레기집청소 상담 가능합니다.</p>
+      <p>{service}, 가정폐기물처리, 이사폐기물처리, 폐업폐기물처리, 쓰레기집청소 상담 가능합니다.</p>
       <a href="tel:{PHONE}">{PHONE} 바로 전화하기</a>
     </section>
   </main>
@@ -496,7 +524,6 @@ def review_html(region, slug, service, index):
     }});
   }});
 }})();
-</script>
 </script>
 </body>
 </html>
@@ -604,12 +631,12 @@ def update_rss():
     kst = timezone(timedelta(hours=9))
     now = datetime.now(kst).strftime("%a, %d %b %Y %H:%M:%S +0900")
     items = ""
-    for region, slug, service in reviews[:20]:
+    for region, slug, service in list(reversed(reviews))[:20]:
         items += f"""
     <item>
       <title>{region} {service} 작업후기</title>
       <link>{BASE_URL}/reviews/{review_slug(slug, service)}.html</link>
-      <description>{region} {service} 폐기물처리 작업후기입니다.</description>
+      <description>{region} {service} 폐기물처리 작업후기입니다. 작업 전후 사진과 비용 안내를 확인하세요.</description>
       <pubDate>{now}</pubDate>
     </item>
 """
