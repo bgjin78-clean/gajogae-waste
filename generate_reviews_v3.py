@@ -14,6 +14,13 @@ PROCESS_IMAGE_COUNT = 25
 # process-01만 jpeg 확장자
 PROCESS_EXT = {1: ".jpeg"}
 
+# 세트 사진 중 '후'가 정리 완료처럼 보이지 않는 번호 (수동 검수)
+CASE_PAIR_BLOCKLIST = set()
+
+
+def valid_case_pair_numbers():
+    return [n for n in range(1, CASE_IMAGE_COUNT + 1) if n not in CASE_PAIR_BLOCKLIST]
+
 reviews = [
     ("창원", "changwon", "쓰레기집청소"),
     ("김해", "gimhae", "가정폐기물처리"),
@@ -56,10 +63,27 @@ reviews = [
     ("양산", "yangsan", "쓰레기집청소"),
     ("함안", "haman", "폐업폐기물처리"),
     ("창녕", "changnyeong", "이사폐기물처리"),
+
+    # ===== 배치 1 (10개): 생활폐기물처리 키워드 분리 =====
+    ("창원", "changwon", "생활폐기물처리"),
+    ("김해", "gimhae", "생활폐기물처리"),
+    ("양산", "yangsan", "생활폐기물처리"),
+    ("함안", "haman", "생활폐기물처리"),
+    ("창녕", "changnyeong", "생활폐기물처리"),
+    ("부산", "busan", "생활폐기물처리"),
+    ("울산", "ulsan", "생활폐기물처리"),
+    ("진주", "jinju", "생활폐기물처리"),
+    ("거제", "geoje", "생활폐기물처리"),
+    ("통영", "tongyeong", "생활폐기물처리"),
+
+    # ===== 다음 배치 대기 (한 번에 10개씩만 추가) =====
+    # 배치 2 예시: 창원 이사/폐업, 김해 쓰레기/폐업, 양산 가정/이사, 함안 이사/쓰레기, 창녕 가정/폐업
+    # 배치 3 예시: 부산 중·서·동·영도·북·강서·연제·사상 + 고성 등
 ]
 
 service_slug = {
     "가정폐기물처리": "home-waste",
+    "생활폐기물처리": "living-waste",
     "이사폐기물처리": "moving-waste",
     "폐업폐기물처리": "business-waste",
     "쓰레기집청소": "trash-cleaning",
@@ -68,21 +92,24 @@ service_slug = {
 type_names = ["작업후기형", "비용분석형", "상담진행형", "체크리스트형"]
 
 service_desc = {
-    "가정폐기물처리": "오래 보관된 생활용품, 낡은 가구, 고장 난 가전, 정리하기 어려운 짐을 중심으로 폐기물처리를 진행했습니다.",
+    "가정폐기물처리": "가구, 가전, 장기간 보관한 짐처럼 가정에서 나온 대형·보관 폐기물을 중심으로 처리했습니다.",
+    "생활폐기물처리": "일상생활에서 쌓인 잡동사니, 봉투형 쓰레기, 방·주방 단위 생활폐기물을 분류해 반출했습니다.",
     "이사폐기물처리": "이사 전후로 남은 가구, 생활폐기물, 사용하지 않는 물건들을 분류하고 반출하는 작업이었습니다.",
     "폐업폐기물처리": "폐업 현장에 남은 집기류, 선반, 사무용품, 생활폐기물을 분류하고 반출하는 방식으로 진행했습니다.",
     "쓰레기집청소": "오랜 기간 방치된 생활쓰레기와 오염된 물품을 분류하고, 폐기물 반출과 공간 정리를 함께 진행했습니다.",
 }
 
 before_problem = {
-    "가정폐기물처리": "작업 전에는 생활용품과 오래된 가구가 섞여 있어 혼자 정리하기 어려운 상태였습니다.",
+    "가정폐기물처리": "작업 전에는 큰 가구와 가전, 보관 짐이 섞여 있어 가정 단위로 정리하기 어려운 상태였습니다.",
+    "생활폐기물처리": "작업 전에는 일상에서 쌓인 생활쓰레기와 잡동사니가 방과 주방에 흩어져 있어 분류가 먼저 필요했습니다.",
     "이사폐기물처리": "이사 후 남은 짐과 폐기물이 한 공간에 모여 있어 반출 동선 정리가 먼저 필요한 상황이었습니다.",
     "폐업폐기물처리": "폐업 후 남은 집기류와 폐기물이 분리되지 않은 상태라 종류별 분류가 필요한 현장이었습니다.",
     "쓰레기집청소": "생활쓰레기가 오래 방치되어 냄새와 오염이 함께 있었고, 폐기물 분류와 반출이 동시에 필요한 상황이었습니다.",
 }
 
 after_result = {
-    "가정폐기물처리": "사용하지 않는 생활폐기물을 반출한 뒤 공간이 넓어지고 정리가 쉬운 상태로 마무리되었습니다.",
+    "가정폐기물처리": "가정에서 나온 대형 폐기물과 보관 짐을 반출한 뒤 공간이 넓어지고 정리가 쉬운 상태로 마무리되었습니다.",
+    "생활폐기물처리": "생활폐기물을 종류별로 정리·반출한 뒤 일상 공간이 다시 쓰기 편한 상태로 정리되었습니다.",
     "이사폐기물처리": "남은 폐기물을 정리한 뒤 이사 후 공간을 다시 사용할 수 있도록 정돈했습니다.",
     "폐업폐기물처리": "집기류와 폐기물을 정리한 뒤 다음 정리나 철거 작업이 가능하도록 현장을 마무리했습니다.",
     "쓰레기집청소": "방치된 쓰레기를 반출하고 남은 공간을 확인해 이후 청소와 정돈이 가능하도록 정리했습니다.",
@@ -97,7 +124,8 @@ def process_path(n):
 def image_set(seed_text, pair_count=2, process_count=2):
     """전·후는 같은 번호(같은 현장)끼리 짝을 맞추고, 중은 process 이미지를 사용."""
     random.seed(seed_text)
-    pairs = random.sample(range(1, CASE_IMAGE_COUNT + 1), pair_count)
+    pool = valid_case_pair_numbers()
+    pairs = random.sample(pool, pair_count)
     process = random.sample(range(1, PROCESS_IMAGE_COUNT + 1), process_count)
     return {
         "pairs": pairs,
@@ -187,7 +215,7 @@ def review_html(region, slug, service, index):
 
   <title>{title}</title>
   <meta name="description" content="{desc}" />
-  <meta name="keywords" content="{region} {service}, {region} 폐기물처리, {region} 작업후기, {region} 가정폐기물처리, {region} 이사폐기물처리, {region} 폐업폐기물처리, {region} 쓰레기집청소" />
+  <meta name="keywords" content="{region} {service}, {region} 폐기물처리, {region} 작업후기, {region} 가정폐기물처리, {region} 생활폐기물처리, {region} 이사폐기물처리, {region} 폐업폐기물처리, {region} 쓰레기집청소" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="{title}" />
@@ -364,9 +392,9 @@ def review_html(region, slug, service, index):
           <p>사진, 주소, 폐기물 양을 남겨주시면 현장 확인 후 연락드립니다.</p>
           <strong class="contact-phone">{PHONE}</strong>
           <ul>
-            <li>✓ 가정폐기물 · 이사폐기물</li>
-            <li>✓ 쓰레기집청소 · 빈집정리</li>
-            <li>✓ 폐업폐기물 · 사무실 집기정리</li>
+            <li>✓ 가정폐기물 · 생활폐기물</li>
+            <li>✓ 이사폐기물 · 쓰레기집청소</li>
+            <li>✓ 폐업폐기물 · 빈집정리</li>
           </ul>
         </div>
 
@@ -388,6 +416,7 @@ def review_html(region, slug, service, index):
             <select id="service" name="service" required>
               <option value="{service}" selected>{service}</option>
               <option value="가정폐기물처리">가정폐기물처리</option>
+              <option value="생활폐기물처리">생활폐기물처리</option>
               <option value="이사폐기물처리">이사폐기물처리</option>
               <option value="폐업폐기물처리">폐업폐기물처리</option>
               <option value="쓰레기집청소">쓰레기집청소</option>
@@ -439,7 +468,7 @@ def review_html(region, slug, service, index):
 
     <section class="cta">
       <h2>{region} 폐기물처리 상담이 필요하신가요?</h2>
-      <p>{service}, 가정폐기물처리, 이사폐기물처리, 폐업폐기물처리, 쓰레기집청소 상담 가능합니다.</p>
+      <p>{service}, 가정폐기물처리, 생활폐기물처리, 이사폐기물처리, 폐업폐기물처리, 쓰레기집청소 상담 가능합니다.</p>
       <a href="tel:{PHONE}">{PHONE} 바로 전화하기</a>
     </section>
   </main>
@@ -542,7 +571,7 @@ def create_reviews_index():
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>폐기물처리 작업후기 | 가족애 폐기물처리</title>
-  <meta name="description" content="부산·경남·울산 폐기물처리 작업후기 모음입니다. 가정폐기물처리, 이사폐기물처리, 폐업폐기물처리, 쓰레기집청소 사례를 확인하세요." />
+  <meta name="description" content="부산·경남·울산 폐기물처리 작업후기 모음입니다. 가정폐기물처리, 생활폐기물처리, 이사폐기물처리, 폐업폐기물처리, 쓰레기집청소 사례를 확인하세요." />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="폐기물처리 작업후기 | 가족애 폐기물처리" />
   <meta property="og:description" content="부산·경남·울산 지역별 폐기물처리 작업후기 모음입니다." />
@@ -575,7 +604,7 @@ def create_reviews_index():
   <main>
     <section class="section area">
       <h2>지역별 폐기물처리 작업후기</h2>
-      <p>가정폐기물처리, 이사폐기물처리, 폐업폐기물처리, 쓰레기집청소 작업 사례입니다.</p>
+      <p>가정폐기물처리, 생활폐기물처리, 이사폐기물처리, 폐업폐기물처리, 쓰레기집청소 작업 사례입니다.</p>
       <div class="region-box">
         {items}
       </div>
@@ -606,10 +635,21 @@ def read_existing_sitemap_urls():
 
 
 def update_sitemap():
-    urls = read_existing_sitemap_urls()
-    review_urls = [f"{BASE_URL}/reviews/index.html"]
-    review_urls += [f"{BASE_URL}/reviews/{review_slug(slug, service)}.html" for region, slug, service in reviews]
-    for url in review_urls:
+    keep_reviews = {f"{BASE_URL}/reviews/index.html"}
+    keep_reviews |= {
+        f"{BASE_URL}/reviews/{review_slug(slug, service)}.html"
+        for region, slug, service in reviews
+    }
+
+    urls = []
+    for url in read_existing_sitemap_urls():
+        # 삭제된 후기 URL은 sitemap에서 제거
+        if "/reviews/" in url and url not in keep_reviews:
+            continue
+        if url not in urls:
+            urls.append(url)
+
+    for url in keep_reviews:
         if url not in urls:
             urls.append(url)
 
@@ -631,7 +671,7 @@ def update_rss():
     kst = timezone(timedelta(hours=9))
     now = datetime.now(kst).strftime("%a, %d %b %Y %H:%M:%S +0900")
     items = ""
-    for region, slug, service in list(reversed(reviews))[:20]:
+    for region, slug, service in list(reversed(reviews))[:40]:
         items += f"""
     <item>
       <title>{region} {service} 작업후기</title>

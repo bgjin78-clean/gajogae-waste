@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>폐기물 세트 사진 검수</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 24px; background: #f5f5f5; }
+    h1 { margin-bottom: 8px; }
+    p { color: #555; }
+    .grid { display: grid; gap: 20px; }
+    .card { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+    .card.blocked { border: 2px solid #e53935; }
+    .card h2 span { font-size: 14px; color: #666; font-weight: normal; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    img { width: 100%; height: auto; border-radius: 8px; background: #ddd; }
+    figcaption { text-align: center; margin-top: 8px; font-size: 14px; }
+    @media (max-width: 720px) { .pair { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>폐기물 세트 사진 검수</h1>
+  <p>전·후가 같은 현장인지, 후 사진이 정리 완료처럼 보이는지 확인하세요. 제외 목록: [] · 사용 가능: 100개</p>
+  <div class="grid">
+    
+      <article class="card">
+        <h2>세트 001 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-001.jpg" alt="before 001" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-001.jpg" alt="after 001" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 002 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-002.jpg" alt="before 002" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-002.jpg" alt="after 002" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 003 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-003.jpg" alt="before 003" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-003.jpg" alt="after 003" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 004 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-004.jpg" alt="before 004" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-004.jpg" alt="after 004" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 005 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-005.jpg" alt="before 005" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-005.jpg" alt="after 005" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 006 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-006.jpg" alt="before 006" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-006.jpg" alt="after 006" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 007 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-007.jpg" alt="before 007" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-007.jpg" alt="after 007" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 008 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-008.jpg" alt="before 008" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-008.jpg" alt="after 008" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 009 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-009.jpg" alt="before 009" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-009.jpg" alt="after 009" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 010 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-010.jpg" alt="before 010" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-010.jpg" alt="after 010" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 011 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-011.jpg" alt="before 011" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-011.jpg" alt="after 011" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 012 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-012.jpg" alt="before 012" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-012.jpg" alt="after 012" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 013 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-013.jpg" alt="before 013" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-013.jpg" alt="after 013" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 014 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-014.jpg" alt="before 014" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-014.jpg" alt="after 014" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 015 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-015.jpg" alt="before 015" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-015.jpg" alt="after 015" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 016 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-016.jpg" alt="before 016" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-016.jpg" alt="after 016" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 017 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-017.jpg" alt="before 017" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-017.jpg" alt="after 017" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 018 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-018.jpg" alt="before 018" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-018.jpg" alt="after 018" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 019 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-019.jpg" alt="before 019" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-019.jpg" alt="after 019" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 020 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-020.jpg" alt="before 020" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-020.jpg" alt="after 020" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 021 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-021.jpg" alt="before 021" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-021.jpg" alt="after 021" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 022 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-022.jpg" alt="before 022" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-022.jpg" alt="after 022" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 023 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-023.jpg" alt="before 023" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-023.jpg" alt="after 023" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 024 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-024.jpg" alt="before 024" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-024.jpg" alt="after 024" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 025 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-025.jpg" alt="before 025" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-025.jpg" alt="after 025" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 026 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-026.jpg" alt="before 026" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-026.jpg" alt="after 026" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 027 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-027.jpg" alt="before 027" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-027.jpg" alt="after 027" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 028 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-028.jpg" alt="before 028" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-028.jpg" alt="after 028" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 029 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-029.jpg" alt="before 029" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-029.jpg" alt="after 029" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 030 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-030.jpg" alt="before 030" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-030.jpg" alt="after 030" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 031 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-031.jpg" alt="before 031" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-031.jpg" alt="after 031" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 032 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-032.jpg" alt="before 032" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-032.jpg" alt="after 032" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 033 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-033.jpg" alt="before 033" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-033.jpg" alt="after 033" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 034 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-034.jpg" alt="before 034" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-034.jpg" alt="after 034" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 035 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-035.jpg" alt="before 035" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-035.jpg" alt="after 035" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 036 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-036.jpg" alt="before 036" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-036.jpg" alt="after 036" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 037 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-037.jpg" alt="before 037" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-037.jpg" alt="after 037" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 038 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-038.jpg" alt="before 038" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-038.jpg" alt="after 038" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 039 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-039.jpg" alt="before 039" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-039.jpg" alt="after 039" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 040 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-040.jpg" alt="before 040" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-040.jpg" alt="after 040" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 041 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-041.jpg" alt="before 041" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-041.jpg" alt="after 041" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 042 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-042.jpg" alt="before 042" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-042.jpg" alt="after 042" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 043 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-043.jpg" alt="before 043" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-043.jpg" alt="after 043" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 044 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-044.jpg" alt="before 044" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-044.jpg" alt="after 044" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 045 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-045.jpg" alt="before 045" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-045.jpg" alt="after 045" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 046 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-046.jpg" alt="before 046" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-046.jpg" alt="after 046" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 047 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-047.jpg" alt="before 047" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-047.jpg" alt="after 047" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 048 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-048.jpg" alt="before 048" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-048.jpg" alt="after 048" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 049 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-049.jpg" alt="before 049" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-049.jpg" alt="after 049" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 050 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-050.jpg" alt="before 050" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-050.jpg" alt="after 050" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 051 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-051.jpg" alt="before 051" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-051.jpg" alt="after 051" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 052 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-052.jpg" alt="before 052" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-052.jpg" alt="after 052" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 053 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-053.jpg" alt="before 053" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-053.jpg" alt="after 053" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 054 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-054.jpg" alt="before 054" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-054.jpg" alt="after 054" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 055 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-055.jpg" alt="before 055" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-055.jpg" alt="after 055" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 056 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-056.jpg" alt="before 056" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-056.jpg" alt="after 056" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 057 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-057.jpg" alt="before 057" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-057.jpg" alt="after 057" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 058 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-058.jpg" alt="before 058" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-058.jpg" alt="after 058" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 059 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-059.jpg" alt="before 059" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-059.jpg" alt="after 059" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 060 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-060.jpg" alt="before 060" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-060.jpg" alt="after 060" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 061 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-061.jpg" alt="before 061" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-061.jpg" alt="after 061" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 062 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-062.jpg" alt="before 062" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-062.jpg" alt="after 062" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 063 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-063.jpg" alt="before 063" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-063.jpg" alt="after 063" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 064 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-064.jpg" alt="before 064" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-064.jpg" alt="after 064" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 065 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-065.jpg" alt="before 065" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-065.jpg" alt="after 065" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 066 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-066.jpg" alt="before 066" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-066.jpg" alt="after 066" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 067 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-067.jpg" alt="before 067" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-067.jpg" alt="after 067" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 068 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-068.jpg" alt="before 068" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-068.jpg" alt="after 068" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 069 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-069.jpg" alt="before 069" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-069.jpg" alt="after 069" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 070 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-070.jpg" alt="before 070" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-070.jpg" alt="after 070" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 071 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-071.jpg" alt="before 071" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-071.jpg" alt="after 071" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 072 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-072.jpg" alt="before 072" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-072.jpg" alt="after 072" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 073 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-073.jpg" alt="before 073" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-073.jpg" alt="after 073" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 074 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-074.jpg" alt="before 074" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-074.jpg" alt="after 074" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 075 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-075.jpg" alt="before 075" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-075.jpg" alt="after 075" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 076 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-076.jpg" alt="before 076" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-076.jpg" alt="after 076" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 077 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-077.jpg" alt="before 077" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-077.jpg" alt="after 077" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 078 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-078.jpg" alt="before 078" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-078.jpg" alt="after 078" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 079 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-079.jpg" alt="before 079" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-079.jpg" alt="after 079" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 080 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-080.jpg" alt="before 080" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-080.jpg" alt="after 080" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 081 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-081.jpg" alt="before 081" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-081.jpg" alt="after 081" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 082 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-082.jpg" alt="before 082" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-082.jpg" alt="after 082" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 083 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-083.jpg" alt="before 083" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-083.jpg" alt="after 083" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 084 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-084.jpg" alt="before 084" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-084.jpg" alt="after 084" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 085 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-085.jpg" alt="before 085" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-085.jpg" alt="after 085" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 086 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-086.jpg" alt="before 086" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-086.jpg" alt="after 086" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 087 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-087.jpg" alt="before 087" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-087.jpg" alt="after 087" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 088 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-088.jpg" alt="before 088" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-088.jpg" alt="after 088" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 089 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-089.jpg" alt="before 089" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-089.jpg" alt="after 089" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 090 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-090.jpg" alt="before 090" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-090.jpg" alt="after 090" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 091 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-091.jpg" alt="before 091" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-091.jpg" alt="after 091" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 092 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-092.jpg" alt="before 092" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-092.jpg" alt="after 092" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 093 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-093.jpg" alt="before 093" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-093.jpg" alt="after 093" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 094 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-094.jpg" alt="before 094" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-094.jpg" alt="after 094" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 095 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-095.jpg" alt="before 095" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-095.jpg" alt="after 095" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 096 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-096.jpg" alt="before 096" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-096.jpg" alt="after 096" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 097 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-097.jpg" alt="before 097" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-097.jpg" alt="after 097" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 098 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-098.jpg" alt="before 098" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-098.jpg" alt="after 098" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 099 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-099.jpg" alt="before 099" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-099.jpg" alt="after 099" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+      <article class="card">
+        <h2>세트 100 <span>사용</span></h2>
+        <div class="pair">
+          <figure>
+            <img src="/images/cases/waste-before-100.jpg" alt="before 100" loading="lazy">
+            <figcaption>작업 전</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/cases/waste-after-100.jpg" alt="after 100" loading="lazy">
+            <figcaption>작업 후</figcaption>
+          </figure>
+        </div>
+      </article>
+  </div>
+</body>
+</html>
